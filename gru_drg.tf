@@ -13,7 +13,6 @@ resource "oci_core_drg" "gru_drg" {
     display_name = "gru_drg"   
 }
 
-
 # DRG Route Table - RT-Spoke
 resource "oci_core_drg_route_table" "RT-Spoke" {  
     provider = oci.gru
@@ -30,7 +29,6 @@ resource "oci_core_drg_route_table_route_rule" "RT-Spoke_Rules" {
     destination_type = "CIDR_BLOCK"
     next_hop_drg_attachment_id = oci_core_drg_attachment.gru_drg_attch_vcn-hub.id
 }
-
 
 # DRG ATTACHMENT - VCN-HUB
 resource "oci_core_drg_attachment" "gru_drg_attch_vcn-hub" {

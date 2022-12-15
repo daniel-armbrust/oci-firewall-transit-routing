@@ -32,7 +32,6 @@ data "oci_core_services" "vcp_all_oci_services" {
     }
 }
 
-
 #
 # https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/identity_availability_domains
 #

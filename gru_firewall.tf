@@ -50,7 +50,6 @@ data "oci_core_vnic_attachments" "gru_firewall_vnics" {
   provider = oci.gru
 
   compartment_id = var.root_compartment
-  #availability_domain = data.oci_identity_availability_domain.ad.name
   instance_id = oci_core_instance.gru_firewall_subn-h_vcn-hub.id
 }
 

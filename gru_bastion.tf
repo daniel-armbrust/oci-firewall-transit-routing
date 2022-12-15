@@ -5,7 +5,6 @@
 # https://docs.oracle.com/en-us/iaas/api/#/en/bastion/20210331/Bastion/
 #
 
-
 # BASTION - SUBN-H (VCN-HUB)
 resource "oci_bastion_bastion" "gru_bastion_subn-h_vcn-hub" {
     provider = oci.gru
