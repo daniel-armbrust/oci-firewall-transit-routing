@@ -1,4 +1,4 @@
-# OCI - Firewall Transit Routing
+# OCI - Transit Routing with Firewall 
 
 [OCI - Access between multiple networks through a single DRG with a firewall](https://docs.oracle.com/pt-br/iaas/Content/Network/Tasks/scenario_g.htm)
 
