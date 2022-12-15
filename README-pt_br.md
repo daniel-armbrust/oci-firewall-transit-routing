@@ -10,7 +10,7 @@
 ```sh
 $ git clone https://github.com/daniel-armbrust/oci-firewall-transit-routing.git
 ```
-3. Configure o arquivo "terraform.tfvars":
+3. Crie o arquivo "terraform.tfvars":
 ```sh
 $ mv terraform.tfvars-example terraform.tfvars
 ```
