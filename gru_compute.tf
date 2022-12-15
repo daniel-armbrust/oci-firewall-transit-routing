@@ -44,7 +44,7 @@ resource "oci_core_instance" "gru_spoke-a_subn-1_vcn-a" {
     }
     
     metadata = {
-        ssh_authorized_keys = file("./sshkeys/openssh-pub.key")
+        ssh_authorized_keys = file("./sshkeys/openssh-key.pub")
         user_data = base64encode(file("./scripts/ol8-init.sh"))
     }
 }
@@ -88,7 +88,7 @@ resource "oci_core_instance" "gru_spoke-c_subn-3_vcn-c" {
     }
     
     metadata = {
-        ssh_authorized_keys = file("./sshkeys/openssh-pub.key")
+        ssh_authorized_keys = file("./sshkeys/openssh-key.pub")
         user_data = base64encode(file("./scripts/ol8-init.sh"))
     }
 }

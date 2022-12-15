@@ -41,7 +41,7 @@ resource "oci_core_instance" "gru_firewall_subn-h_vcn-hub" {
     }
     
     metadata = {
-        ssh_authorized_keys = file("./sshkeys/openssh-pub.key")
+        ssh_authorized_keys = file("./sshkeys/openssh-key.pub")
         user_data = base64encode(file("./scripts/firewall-init.sh"))
     }
 }
