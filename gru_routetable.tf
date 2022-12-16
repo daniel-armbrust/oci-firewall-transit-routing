@@ -42,8 +42,7 @@ resource "oci_core_route_table" "gru_rtb_subn-h_vcn-hub" {
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
         description = "SUBNET-3 (VCN-C)"
-    }   
-   
+    }      
 }
 
 # ROUTE TABLE - VCN-Hub-Ingress (VCN-HUB)
