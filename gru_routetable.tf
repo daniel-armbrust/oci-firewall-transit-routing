@@ -11,7 +11,7 @@ resource "oci_core_route_table" "gru_rtb_subn-h_vcn-hub" {
 
     compartment_id = var.root_compartment
     vcn_id = oci_core_vcn.gru_vcn-hub.id
-    display_name = "rtb_subn-h"
+    display_name = "rtb_subn-h"   
 
     # Service Gateway
     route_rules {
@@ -20,26 +20,30 @@ resource "oci_core_route_table" "gru_rtb_subn-h_vcn-hub" {
         network_entity_id = oci_core_service_gateway.gru_sgw_vcn-hub.id        
     }
 
-    # VCN-A
+    # SUBNET-1 (VCN-A)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-a.cidr_blocks[0]
+        destination = "192.168.10.0/26"       
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-1 (VCN-A)"
     }
 
-    # VCN-B
+    # SUBNET-2 (VCN-B)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-b.cidr_blocks[0]
+        destination = "192.168.20.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-2 (VCN-B)"
     }
 
-    # VCN-C
+    # SUBNET-3 (VCN-C)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-c.cidr_blocks[0]
+        destination = "192.168.30.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-3 (VCN-C)"
     }   
+   
 }
 
 # ROUTE TABLE - VCN-Hub-Ingress (VCN-HUB)
@@ -50,27 +54,28 @@ resource "oci_core_route_table" "VCN-Hub-Ingress" {
     vcn_id = oci_core_vcn.gru_vcn-hub.id
     display_name = "VCN-Hub-Ingress"
 
-    # VCN-A
+    # SUBNET-1 (VCN-A)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-a.cidr_blocks[0]
+        destination = "192.168.10.0/26"
         destination_type = "CIDR_BLOCK"   
         network_entity_id = data.oci_core_private_ips.gru_private-ip-id_vnic-1_firewall_subn-h_vcn-hub.private_ips[0]["id"]
     }
 
-    # VCN-B
+    # SUBNET-2 (VCN-B)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-b.cidr_blocks[0]
+        destination = "192.168.20.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = data.oci_core_private_ips.gru_private-ip-id_vnic-1_firewall_subn-h_vcn-hub.private_ips[0]["id"]
     }
 
-    # VCN-C
+    # SUBNET-3 (VCN-C)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-c.cidr_blocks[0]
+        destination = "192.168.30.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = data.oci_core_private_ips.gru_private-ip-id_vnic-1_firewall_subn-h_vcn-hub.private_ips[0]["id"]
-    }   
+    }       
 }
+
 
 # ROUTE TABLE - SUBN-1 (VCN-A)
 resource "oci_core_route_table" "gru_rtb_subn-1_vcn-a" {   
@@ -87,26 +92,29 @@ resource "oci_core_route_table" "gru_rtb_subn-1_vcn-a" {
         network_entity_id = oci_core_service_gateway.gru_sgw_vcn-a.id        
     }    
 
-    # VCN-HUB
+    # SUBNET-H (VCN-HUB)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-hub.cidr_blocks[0]
+        destination = "10.0.0.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-H (VCN-HUB)"
     }
 
-    # VCN-B
+    # SUBNET-2 (VCN-B)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-b.cidr_blocks[0]
+        destination = "192.168.20.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-2 (VCN-B)"
     }
 
-    # VCN-C
+    # SUBNET-3 (VCN-C)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-c.cidr_blocks[0]
+        destination = "192.168.30.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
-    }    
+        description = "SUBNET-3 (VCN-C)"
+    }     
 }
 
 # ROUTE TABLE - SUBN-2 (VCN-B)
@@ -124,26 +132,29 @@ resource "oci_core_route_table" "gru_rtb_subn-2_vcn-b" {
         network_entity_id = oci_core_service_gateway.gru_sgw_vcn-b.id        
     }
 
-    # VCN-HUB
+    # SUBNET-H (VCN-HUB)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-hub.cidr_blocks[0]
+        destination = "10.0.0.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-H (VCN-HUB)"
     }
 
-    # VCN-A
+    # SUBNET-1 (VCN-A)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-a.cidr_blocks[0]
+        destination = "192.168.10.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-1 (VCN-A)"
     }   
 
-    # VCN-C
+    # SUBNET-3 (VCN-C)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-c.cidr_blocks[0]
+        destination = "192.168.30.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
-    }   
+        description = "SUBNET-3 (VCN-C)"
+    }     
 }
 
 # ROUTE TABLE - SUBN-3 (VCN-C)
@@ -161,24 +172,27 @@ resource "oci_core_route_table" "gru_rtb_subn-3_vcn-c" {
         network_entity_id = oci_core_service_gateway.gru_sgw_vcn-c.id        
     }
 
-    # VCN-HUB
-    route_rules {
-        destination = oci_core_vcn.gru_vcn-hub.cidr_blocks[0]
+    # SUBNET-H (VCN-HUB)
+    route_rules {        
+        destination = "10.0.0.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-H (VCN-HUB)"
     }
 
-    # VCN-A
+    # SUBNET-1 (VCN-A)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-a.cidr_blocks[0]
+        destination = "192.168.10.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
+        description = "SUBNET-1 (VCN-A)"
     }
 
-    # VCN-B
+    # SUBNET-2 (VCN-B)
     route_rules {
-        destination = oci_core_vcn.gru_vcn-b.cidr_blocks[0]
+        destination = "192.168.20.0/26"
         destination_type = "CIDR_BLOCK"
         network_entity_id = oci_core_drg.gru_drg.id
-    }   
+        description = "SUBNET-2 (VCN-B)"
+    }      
 }
