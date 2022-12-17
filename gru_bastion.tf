@@ -14,8 +14,4 @@ resource "oci_bastion_bastion" "gru_bastion_subn-h_vcn-hub" {
     bastion_type = "standard"
     client_cidr_block_allow_list = [local.my_public_ip]
     target_subnet_id = oci_core_subnet.gru_subn-h_vcn-hub.id
-
-    lifecycle {
-        prevent_destroy = true
-    }
 }
