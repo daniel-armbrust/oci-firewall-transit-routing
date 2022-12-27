@@ -17,7 +17,7 @@ $ git clone https://github.com/daniel-armbrust/oci-firewall-transit-routing.git
 $ mv terraform.tfvars-example terraform.tfvars
 ```
 
-4. [Crie uma chave de API.](https://docs.oracle.com/pt-br/iaas/Content/Identity/Tasks/managingcredentials.htm#upload_key)
+4. [Create an API key.](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm#upload_key)
 
 5. Fill in the "terraform.tfvars" file with their respective values:
 ```sh
