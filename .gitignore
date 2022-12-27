@@ -28,4 +28,4 @@ override.tf.json
 terraform.rc
 
 # Project Stuffs
-sshkeys/*.key
+sshkeys/*-key
