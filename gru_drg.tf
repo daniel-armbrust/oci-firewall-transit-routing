@@ -10,21 +10,21 @@ resource "oci_core_drg" "gru_drg" {
     provider = oci.gru
 
     compartment_id = var.root_compartment
-    display_name = "gru_drg"   
+    display_name = "drg"   
 }
 
-# DRG Route Table - RT-Spoke
-resource "oci_core_drg_route_table" "RT-Spoke" {  
+# DRG Route Table - rtb-drg_spoke
+resource "oci_core_drg_route_table" "rtb-drg_spoke" {  
     provider = oci.gru
 
     drg_id = oci_core_drg.gru_drg.id   
-    display_name = "RT-Spoke"    
+    display_name = "rtb-drg_spoke"    
 }
 
-resource "oci_core_drg_route_table_route_rule" "RT-Spoke_Rules" {
+resource "oci_core_drg_route_table_route_rule" "rtb-drg_spoke_rules" {
     provider = oci.gru
 
-    drg_route_table_id = oci_core_drg_route_table.RT-Spoke.id
+    drg_route_table_id = oci_core_drg_route_table.rtb-drg_spoke.id
     destination = "0.0.0.0/0"
     destination_type = "CIDR_BLOCK"
     next_hop_drg_attachment_id = oci_core_drg_attachment.gru_drg_attch_vcn-hub.id
@@ -40,10 +40,10 @@ resource "oci_core_drg_attachment" "gru_drg_attch_vcn-hub" {
     network_details {
         id = oci_core_vcn.gru_vcn-hub.id
         type = "VCN"        
-        route_table_id = oci_core_route_table.VCN-Hub-Ingress.id
+        route_table_id = oci_core_route_table.rtb_hub.id
     }
 
-    drg_route_table_id = oci_core_drg_route_table.RT-Hub.id
+    drg_route_table_id = oci_core_drg_route_table.gru_rtb-drg_hub.id
 }
 
 # DRG ATTACHMENT - VCN-A
@@ -58,7 +58,7 @@ resource "oci_core_drg_attachment" "gru_drg_attch_vcn-a" {
         type = "VCN"      
     }
 
-    drg_route_table_id = oci_core_drg_route_table.RT-Spoke.id
+    drg_route_table_id = oci_core_drg_route_table.rtb-drg_spoke.id
 }
 
 # DRG ATTACHMENT - VCN-B
@@ -73,7 +73,7 @@ resource "oci_core_drg_attachment" "gru_drg_attch_vcn-b" {
         type = "VCN"        
     }
 
-    drg_route_table_id = oci_core_drg_route_table.RT-Spoke.id
+    drg_route_table_id = oci_core_drg_route_table.rtb-drg_spoke.id
 }
 
 # DRG ATTACHMENT - VCN-C
@@ -88,22 +88,22 @@ resource "oci_core_drg_attachment" "gru_drg_attch_vcn-c" {
         type = "VCN"    
     }
 
-    drg_route_table_id = oci_core_drg_route_table.RT-Spoke.id
+    drg_route_table_id = oci_core_drg_route_table.rtb-drg_spoke.id
 }
 
 # DRG - Import Route Distribution
-resource "oci_core_drg_route_distribution" "Import-Hub" {
+resource "oci_core_drg_route_distribution" "gru_imp-rtb-dst_hub" {
     provider = oci.gru
 
     drg_id = oci_core_drg.gru_drg.id
     distribution_type = "IMPORT"
-    display_name = "Import-Hub"
+    display_name = "imp-rtb-dst_hub"
 }
 
-resource "oci_core_drg_route_distribution_statement" "Import-Hub_Statement-1" {
+resource "oci_core_drg_route_distribution_statement" "gru_stm-1_imp-rtb-dst_hub" {
     provider = oci.gru
 
-    drg_route_distribution_id = oci_core_drg_route_distribution.Import-Hub.id
+    drg_route_distribution_id = oci_core_drg_route_distribution.gru_imp-rtb-dst_hub.id
     
     action = "ACCEPT"
 
@@ -115,10 +115,10 @@ resource "oci_core_drg_route_distribution_statement" "Import-Hub_Statement-1" {
     priority = 10
 }
 
-resource "oci_core_drg_route_distribution_statement" "Import-Hub_Statement-2" {
+resource "oci_core_drg_route_distribution_statement" "gru_stm-2_imp-rtb-dst_hub" {
     provider = oci.gru
 
-    drg_route_distribution_id = oci_core_drg_route_distribution.Import-Hub.id
+    drg_route_distribution_id = oci_core_drg_route_distribution.gru_imp-rtb-dst_hub.id
     
     action = "ACCEPT"
 
@@ -130,10 +130,10 @@ resource "oci_core_drg_route_distribution_statement" "Import-Hub_Statement-2" {
     priority = 20
 }
 
-resource "oci_core_drg_route_distribution_statement" "Import-Hub_Statement-3" {
+resource "oci_core_drg_route_distribution_statement" "gru_stm-3_imp-rtb-dst_hub" {
     provider = oci.gru
 
-    drg_route_distribution_id = oci_core_drg_route_distribution.Import-Hub.id
+    drg_route_distribution_id = oci_core_drg_route_distribution.gru_imp-rtb-dst_hub.id
     
     action = "ACCEPT"
 
@@ -145,11 +145,11 @@ resource "oci_core_drg_route_distribution_statement" "Import-Hub_Statement-3" {
     priority = 30
 }
 
-# DRG Route Table - RT-Hub
-resource "oci_core_drg_route_table" "RT-Hub" {
+# DRG Route Table - gru_rtb-drg_hub
+resource "oci_core_drg_route_table" "gru_rtb-drg_hub" {
     provider = oci.gru
 
     drg_id = oci_core_drg.gru_drg.id   
-    display_name = "RT-Hub"    
-    import_drg_route_distribution_id = oci_core_drg_route_distribution.Import-Hub.id
+    display_name = "rtb-drg_hub"    
+    import_drg_route_distribution_id = oci_core_drg_route_distribution.gru_imp-rtb-dst_hub.id
 }

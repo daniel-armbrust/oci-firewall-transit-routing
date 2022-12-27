@@ -45,13 +45,13 @@ resource "oci_core_route_table" "gru_rtb_subn-h_vcn-hub" {
     }      
 }
 
-# ROUTE TABLE - VCN-Hub-Ingress (VCN-HUB)
-resource "oci_core_route_table" "VCN-Hub-Ingress" {   
+# ROUTE TABLE - rtb_hub (VCN-HUB)
+resource "oci_core_route_table" "rtb_hub" {   
     provider = oci.gru
 
     compartment_id = var.root_compartment
     vcn_id = oci_core_vcn.gru_vcn-hub.id
-    display_name = "VCN-Hub-Ingress"
+    display_name = "rtb_hub"
 
     # SUBNET-1 (VCN-A)
     route_rules {
@@ -74,7 +74,6 @@ resource "oci_core_route_table" "VCN-Hub-Ingress" {
         network_entity_id = data.oci_core_private_ips.gru_private-ip-id_vnic-1_firewall_subn-h_vcn-hub.private_ips[0]["id"]
     }       
 }
-
 
 # ROUTE TABLE - SUBN-1 (VCN-A)
 resource "oci_core_route_table" "gru_rtb_subn-1_vcn-a" {   
